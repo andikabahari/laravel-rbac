@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        dd(User::with('roles')->find(1));
+        dd(User::with('role')->get());
     }
 
     /**

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 use App\Permission;
-use App\RolePermission;
+use App\PermissionRole;
 
 class RoleSeeder extends Seeder
 {
@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
             foreach ($adminActions as $action) {
                 $permission = Permission::where('title', $action . '-' . $resource)->first();
 
-                $roleAdminPermission = new RolePermission;
+                $roleAdminPermission = new PermissionRole;
                 $roleAdminPermission->role_id = $roleAdmin->id;
                 $roleAdminPermission->permission_id = $permission->id;
                 $roleAdminPermission->save();
@@ -55,7 +55,7 @@ class RoleSeeder extends Seeder
             foreach ($userActions as $action) {
                 $permission = Permission::where('title', $action . '-' . $resource)->first();
 
-                $roleUserPermission = new RolePermission;
+                $roleUserPermission = new PermissionRole;
                 $roleUserPermission->role_id = $roleUser->id;
                 $roleUserPermission->permission_id = $permission->id;
                 $roleUserPermission->save();

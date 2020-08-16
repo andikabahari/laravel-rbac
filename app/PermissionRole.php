@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RolePermission extends Model
+class PermissionRole extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'role_permission';
+    protected $table = 'permission_role';
 
     /**
      * Indicates if the model should be timestamped.

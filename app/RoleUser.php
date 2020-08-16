@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRole extends Model
+class RoleUser extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'user_role';
+    protected $table = 'role_user';
 
     /**
      * Indicates if the model should be timestamped.
