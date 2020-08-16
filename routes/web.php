@@ -30,6 +30,12 @@ Route::put('/items/{id}', 'ItemController@update')->name('update-item');
 Route::delete('/items/{id}', 'ItemController@destroy')->name('destroy-item');
 
 Route::get('/users', 'UserController@index')->name('users');
+Route::get('/users/create', 'UserController@create')->name('create-user');
+Route::post('/users', 'UserController@store')->name('store-user');
+Route::get('/users/{id}', 'UserController@show')->name('show-user');
+Route::get('/users/{id}/edit', 'UserController@edit')->name('edit-user');
+Route::put('/users/{id}', 'UserController@update')->name('update-user');
+Route::delete('/users/{id}', 'UserController@destroy')->name('destroy-user');
 
 Route::get('/roles', 'RoleController@index')->name('roles');
 
