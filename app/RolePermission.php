@@ -11,7 +11,7 @@ class RolePermission extends Model
      *
      * @var string
      */
-    protected $table = 'roles_permissions';
+    protected $table = 'role_permission';
 
     /**
      * Indicates if the model should be timestamped.

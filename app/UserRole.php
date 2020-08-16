@@ -11,7 +11,7 @@ class UserRole extends Model
      *
      * @var string
      */
-    protected $table = 'users_roles';
+    protected $table = 'user_role';
 
     /**
      * Indicates if the model should be timestamped.
