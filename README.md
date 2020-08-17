@@ -134,6 +134,8 @@ You can also use `Blade directives` (`@can`, `@cannot`, etc.) when writing blade
 
 ### Administrator (demo)
 
+You can also see the other resources (roles, permissions, and items).
+
 ![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(4)%20(demo).png>)
 
 ### User
