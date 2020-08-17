@@ -19,7 +19,7 @@ class AuthGates
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $roles = Role::with('permissions')->get();
+            $roles = Role::all();
 
             foreach ($roles as $role) {
                 foreach ($role->permissions as $permission) {

@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Permission;
 
-class StoreItem extends FormRequest
+class StoreRole extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +26,13 @@ class StoreItem extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
+            'title' => 'required|string|max:100|unique:roles',
             'description' => 'max:300',
+            'permissions' => [
+                'required',
+                'array',
+                Rule::in(Permission::all()->pluck('id')->toArray()),
+            ],
         ];
     }
 }

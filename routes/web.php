@@ -19,8 +19,6 @@ Route::get('/', 'WelcomeController')->name('welcome');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/user-management', 'HomeController@index')->name('user-management');
-
 Route::get('/items', 'ItemController@index')->name('items');
 Route::get('/items/create', 'ItemController@create')->name('create-item');
 Route::post('/items', 'ItemController@store')->name('store-item');
@@ -38,5 +36,17 @@ Route::put('/users/{id}', 'UserController@update')->name('update-user');
 Route::delete('/users/{id}', 'UserController@destroy')->name('destroy-user');
 
 Route::get('/roles', 'RoleController@index')->name('roles');
+Route::get('/roles/create', 'RoleController@create')->name('create-role');
+Route::post('/roles', 'RoleController@store')->name('store-role');
+Route::get('/roles/{id}', 'RoleController@show')->name('show-role');
+Route::get('/roles/{id}/edit', 'RoleController@edit')->name('edit-role');
+Route::put('/roles/{id}', 'RoleController@update')->name('update-role');
+Route::delete('/roles/{id}', 'RoleController@destroy')->name('destroy-role');
 
 Route::get('/permissions', 'PermissionController@index')->name('permissions');
+Route::get('/permissions/create', 'PermissionController@create')->name('create-permission');
+Route::post('/permissions', 'PermissionController@store')->name('store-permission');
+Route::get('/permissions/{id}', 'PermissionController@show')->name('show-permission');
+Route::get('/permissions/{id}/edit', 'PermissionController@edit')->name('edit-permission');
+Route::put('/permissions/{id}', 'PermissionController@update')->name('update-permission');
+Route::delete('/permissions/{id}', 'PermissionController@destroy')->name('destroy-permission');

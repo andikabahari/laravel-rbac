@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Permission;
+use App\Http\Requests\StorePermission;
+use App\Http\Requests\UpdatePermission;
 
 class PermissionController extends Controller
 {
@@ -13,7 +16,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::all();
+
+        return view('permissions', compact('permissions'));
     }
 
     /**
@@ -23,7 +28,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('permissions.create');
     }
 
     /**
@@ -32,9 +37,17 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePermission $request)
     {
-        //
+        $validated = $request->validated();
+
+        $permission = new Permission;
+        $permission->title = $validated['title'];
+        $permission->save();
+
+        $request->session()->flash('status', 'New permission added successfully!');
+
+        return redirect()->route('permissions');
     }
 
     /**
@@ -45,7 +58,9 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+
+        return view('permissions.show', compact('permission'));
     }
 
     /**
@@ -56,7 +71,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+
+        return view('permissions.edit', compact('permission'));
     }
 
     /**
@@ -66,9 +83,17 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePermission $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $permission = Permission::findOrFail($id);
+        $permission->title = $validated['title'];
+        $permission->save();
+
+        $request->session()->flash('status', 'A permission edited successfully!');
+
+        return redirect()->route('permissions');
     }
 
     /**
@@ -79,6 +104,9 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        $permission->delete();
+
+        return redirect()->route('permissions');
     }
 }

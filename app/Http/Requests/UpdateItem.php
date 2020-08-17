@@ -24,7 +24,7 @@ class UpdateItem extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
+            'name' => 'required|string|max:100',
             'description' => 'max:300',
         ];
     }

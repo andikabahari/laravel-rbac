@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Role;
+use App\Permission;
+use App\Http\Requests\StoreRole;
+use App\Http\Requests\UpdateRole;
 
 class RoleController extends Controller
 {
@@ -13,7 +17,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+
+        return view('roles', compact('roles'));
     }
 
     /**
@@ -23,7 +29,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -32,9 +40,20 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRole $request)
     {
-        //
+        $validated = $request->validated();
+
+        $role = new Role;
+        $role->title = $validated['title'];
+        $role->description = $validated['description'];
+        $role->save();
+        $role->permissions()->attach($validated['permissions']);
+        $role->save();
+
+        $request->session()->flash('status', 'New role added successfully!');
+
+        return redirect()->route('roles');
     }
 
     /**
@@ -45,7 +64,9 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        return view('roles.show', compact('role'));
     }
 
     /**
@@ -56,7 +77,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all();
+
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -66,9 +90,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRole $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $role = Role::findOrFail($id);
+        $role->title = $validated['title'];
+        $role->description = $validated['description'];
+        $role->permissions()->sync($validated['permissions']);
+        $role->save();
+
+        $request->session()->flash('status', 'A role edited successfully!');
+
+        return redirect()->route('roles');
     }
 
     /**
@@ -79,6 +113,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return redirect()->route('roles');
     }
 }

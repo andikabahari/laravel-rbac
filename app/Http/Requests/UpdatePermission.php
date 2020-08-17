@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreItem extends FormRequest
+class UpdatePermission extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,12 @@ class StoreItem extends FormRequest
      */
     public function rules()
     {
+        $unique = $this->title != $this->current_title
+                ? '|unique:permissions'
+                : null;
+
         return [
-            'name' => 'required|string|max:100',
-            'description' => 'max:300',
+            'title' => 'required|string|max:100' . $unique,
         ];
     }
 }
