@@ -44,6 +44,34 @@ Run the application!
 php artisan serve
 ```
 
+## User List
+
+You can use these user credentials to login.
+
+### Administrator
+
+Email: administrator@example.com
+
+Password: password
+
+### Administrator (demo)
+
+Email: administratordemo@example.com
+
+Password: password
+
+### User
+
+Email: johndoe@example.com
+
+Password: password
+
+### User (demo)
+
+Email: johndoedemo@example.com
+
+Password: password
+
 ## Authorization
 
 This application uses `Gates` for authorization.
