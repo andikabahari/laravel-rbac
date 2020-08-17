@@ -84,7 +84,7 @@ class ItemController extends Controller
 
 You can also use `Blade directives` (`@can`, `@cannot`, etc.) when writing blade templates.
 
-```php
+```
 @can('create-item', Auth::user())
     <a class="btn btn-success mb-3" href="{{ route('create-item') }}">
         {{ __('Add Item') }}
