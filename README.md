@@ -121,3 +121,25 @@ You can also use `Blade directives` (`@can`, `@cannot`, etc.) when writing blade
 ```
 
 ## Screenshots
+
+### Administrator
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(0).png>)
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(1).png>)
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(2).png>)
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(3).png>)
+
+### Administrator (demo)
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/administrator/Screenshot_2020-08-18%20Laravel%20RBAC(4)%20(demo).png>)
+
+### User
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/user/Screenshot_2020-08-18%20Laravel%20RBAC(0).png>)
+
+### User (demo)
+
+![ScreenShot](<https://github.com/andikabahari/laravel-rbac/blob/development/screenshots/user/Screenshot_2020-08-18%20Laravel%20RBAC(1)%20(demo).png>)
