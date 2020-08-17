@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Role;
-use App\RoleUser;
 
 class UserSeeder extends Seeder
 {
@@ -14,30 +13,68 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new User;
-        $admin->name = 'Administrator';
-        $admin->email = 'administrator@example.com';
-        $admin->password = Hash::make('password');
-        $admin->save();
+        /*
+        |--------------------------------------------------------------------------
+        | Administrator
+        |--------------------------------------------------------------------------
+        */
 
-        $roleAdmin = Role::where('title', 'Administrator')->first();
+        $role = Role::where('title', 'Administrator')->first();
 
-        $userRoleAdmin = new RoleUser;
-        $userRoleAdmin->user_id = $admin->id;
-        $userRoleAdmin->role_id = $roleAdmin->id;
-        $userRoleAdmin->save();
+        $user = new User;
+        $user->name = 'Administrator';
+        $user->email = 'administrator@example.com';
+        $user->password = Hash::make('password');
+        $user->save();
+        $user->roles()->attach($role->id);
+        $user->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Administrator Demo
+        |--------------------------------------------------------------------------
+        */
+
+        $role = Role::where('title', 'Administrator Demo')->first();
+
+        $user = new User;
+        $user->name = 'Administrator Demo';
+        $user->email = 'administratordemo@example.com';
+        $user->password = Hash::make('password');
+        $user->save();
+        $user->roles()->attach($role->id);
+        $user->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | User
+        |--------------------------------------------------------------------------
+        */
+
+        $role = Role::where('title', 'User')->first();
 
         $user = new User;
         $user->name = 'John Doe';
         $user->email = 'johndoe@example.com';
         $user->password = Hash::make('password');
         $user->save();
+        $user->roles()->attach($role->id);
+        $user->save();
 
-        $roleUser = Role::where('title', 'User')->first();
+        /*
+        |--------------------------------------------------------------------------
+        | User Demo
+        |--------------------------------------------------------------------------
+        */
 
-        $userRoleUser = new RoleUser;
-        $userRoleUser->user_id = $user->id;
-        $userRoleUser->role_id = $roleUser->id;
-        $userRoleUser->save();
+        $role = Role::where('title', 'User Demo')->first();
+
+        $user = new User;
+        $user->name = 'John Doe Demo';
+        $user->email = 'johndoedemo@example.com';
+        $user->password = Hash::make('password');
+        $user->save();
+        $user->roles()->attach($role->id);
+        $user->save();
     }
 }

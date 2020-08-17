@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use App\Permission;
 use App\Http\Requests\StorePermission;
 use App\Http\Requests\UpdatePermission;
@@ -16,6 +18,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view-permission', Auth::user());
+
         $permissions = Permission::all();
 
         return view('permissions', compact('permissions'));
@@ -28,6 +32,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create-permission', Auth::user());
+
         return view('permissions.create');
     }
 
@@ -39,6 +45,8 @@ class PermissionController extends Controller
      */
     public function store(StorePermission $request)
     {
+        Gate::authorize('create-permission', Auth::user());
+
         $validated = $request->validated();
 
         $permission = new Permission;
@@ -58,6 +66,8 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('view-permission', Auth::user());
+
         $permission = Permission::findOrFail($id);
 
         return view('permissions.show', compact('permission'));
@@ -71,6 +81,8 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('edit-permission', Auth::user());
+
         $permission = Permission::findOrFail($id);
 
         return view('permissions.edit', compact('permission'));
@@ -85,6 +97,8 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermission $request, $id)
     {
+        Gate::authorize('edit-permission', Auth::user());
+
         $validated = $request->validated();
 
         $permission = Permission::findOrFail($id);
@@ -104,6 +118,8 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete-permission', Auth::user());
+
         $permission = Permission::findOrFail($id);
         $permission->delete();
 

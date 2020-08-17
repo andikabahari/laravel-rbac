@@ -20,6 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view-user', Auth::user());
+
         $users = User::all();
 
         return view('users', compact('users'));
@@ -32,6 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create-user', Auth::user());
+
         $roles = Role::all();
 
         return view('users.create', compact('roles'));
@@ -45,6 +49,8 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
+        Gate::authorize('create-user', Auth::user());
+
         $validated = $request->validated();
 
         $user = new User;
@@ -68,6 +74,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('view-user', Auth::user());
+
         $user = User::findOrFail($id);
 
         return view('users.show', compact('user'));
@@ -81,6 +89,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('edit-user', Auth::user());
+
         $user = User::findOrFail($id);
         $roles = Role::all();
 
@@ -96,6 +106,8 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, $id)
     {
+        Gate::authorize('edit-user', Auth::user());
+
         $validated = $request->validated();
 
         $user = User::findOrFail($id);
@@ -117,6 +129,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete-user', Auth::user());
+
         $user = User::findOrFail($id);
         $user->delete();
 

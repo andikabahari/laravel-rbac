@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use App\Item;
 use App\Http\Requests\StoreItem;
 use App\Http\Requests\UpdateItem;
@@ -16,6 +18,8 @@ class ItemController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view-item', Auth::user());
+
         $items = Item::all();
 
         return view('items', compact('items'));
@@ -28,6 +32,8 @@ class ItemController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create-item', Auth::user());
+
         return view('items.create');
     }
 
@@ -39,6 +45,8 @@ class ItemController extends Controller
      */
     public function store(StoreItem $request)
     {
+        Gate::authorize('create-item', Auth::user());
+
         $validated = $request->validated();
 
         $item = new Item;
@@ -59,6 +67,8 @@ class ItemController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('view-item', Auth::user());
+
         $item = Item::findOrFail($id);
 
         return view('items.show', compact('item'));
@@ -72,6 +82,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('edit-item', Auth::user());
+
         $item = Item::findOrFail($id);
 
         return view('items.edit', compact('item'));
@@ -86,6 +98,8 @@ class ItemController extends Controller
      */
     public function update(UpdateItem $request, $id)
     {
+        Gate::authorize('edit-item', Auth::user());
+
         $validated = $request->validated();
 
         $item = Item::findOrFail($id);
@@ -106,6 +120,8 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete-item', Auth::user());
+
         $item = Item::findOrFail($id);
         $item->delete();
 

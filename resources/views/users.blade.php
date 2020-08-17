@@ -14,9 +14,11 @@
                         </div>
                     @endif
 
-                    <a class="btn btn-success mb-3" href="{{ route('create-user') }}">
-                        {{ __('Add User') }}
-                    </a>
+                    @can('create-user', Auth::user())
+                        <a class="btn btn-success mb-3" href="{{ route('create-user') }}">
+                            {{ __('Add User') }}
+                        </a>
+                    @endcan
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -40,19 +42,25 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ implode(', ', $user->roles->pluck('title')->toArray()) }}</td>
                                         <td>
-                                            <a class="btn btn-info btn-sm" href="{{ route('show-user', $user->id) }}">
-                                                {{ __('View') }}
-                                            </a>
-                                            <a class="btn btn-primary btn-sm" href="{{ route('edit-user', $user->id) }}">
-                                                {{ __('Edit') }}
-                                            </a>
-                                            <form class="d-inline-block" action="{{ route('destroy-user', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">
-                                                    {{ __('Delete') }}
-                                                </button>
-                                            </form>
+                                            @can('view-user', Auth::user())
+                                                <a class="btn btn-info btn-sm" href="{{ route('show-user', $user->id) }}">
+                                                    {{ __('View') }}
+                                                </a>
+                                            @endcan
+                                            @can('edit-user', Auth::user())
+                                                <a class="btn btn-primary btn-sm" href="{{ route('edit-user', $user->id) }}">
+                                                    {{ __('Edit') }}
+                                                </a>
+                                            @endcan
+                                            @can('delete-user', Auth::user())
+                                                <form class="d-inline-block" action="{{ route('destroy-user', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm" type="submit">
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

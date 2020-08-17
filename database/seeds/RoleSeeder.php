@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 use App\Permission;
-use App\PermissionRole;
 
 class RoleSeeder extends Seeder
 {
@@ -14,52 +13,130 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roleAdmin = new Role;
-        $roleAdmin->title = 'Administrator';
-        $roleAdmin->description = 'Super user.';
-        $roleAdmin->save();
+        /*
+        |--------------------------------------------------------------------------
+        | Administrator
+        |--------------------------------------------------------------------------
+        */
 
-        $adminResources = [
+        $resources = [
             'user', 'role', 'permission', 'item',
         ];
 
-        $adminActions = [
+        $actions = [
             'view', 'create', 'edit', 'delete',
         ];
 
-        foreach ($adminResources as $resource) {
-            foreach ($adminActions as $action) {
-                $permission = Permission::where('title', $action . '-' . $resource)->first();
+        $permissionIds = [];
 
-                $roleAdminPermission = new PermissionRole;
-                $roleAdminPermission->role_id = $roleAdmin->id;
-                $roleAdminPermission->permission_id = $permission->id;
-                $roleAdminPermission->save();
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                $permission = Permission::where('title', $action . '-' . $resource)->first();
+                $permissionIds[] = $permission->id;
             }
         }
 
-        $roleUser = new Role;
-        $roleUser->title = 'User';
-        $roleUser->description = 'Ordinary user.';
-        $roleUser->save();
+        $permission = Permission::where('title', 'access-user-management')->first();
+        $permissionIds[] = $permission->id;
 
-        $userResources = [
+        $role = new Role;
+        $role->title = 'Administrator';
+        $role->description = 'Super user.';
+        $role->save();
+        $role->permissions()->attach($permissionIds);
+        $role->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Administrator Demo
+        |--------------------------------------------------------------------------
+        */
+
+        $resources = [
+            'user', 'role', 'permission', 'item',
+        ];
+
+        $actions = [
+            'view',
+        ];
+
+        $permissionIds = [];
+
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                $permission = Permission::where('title', $action . '-' . $resource)->first();
+                $permissionIds[] = $permission->id;
+            }
+        }
+
+        $permission = Permission::where('title', 'access-user-management')->first();
+        $permissionIds[] = $permission->id;
+
+        $role = new Role;
+        $role->title = 'Administrator Demo';
+        $role->description = 'Demo for super user.';
+        $role->save();
+        $role->permissions()->attach($permissionIds);
+        $role->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | User
+        |--------------------------------------------------------------------------
+        */
+
+        $resources = [
             'item',
         ];
 
-        $userActions = [
+        $actions = [
             'view', 'create', 'edit', 'delete',
         ];
 
-        foreach ($userResources as $resource) {
-            foreach ($userActions as $action) {
-                $permission = Permission::where('title', $action . '-' . $resource)->first();
+        $permissionIds = [];
 
-                $roleUserPermission = new PermissionRole;
-                $roleUserPermission->role_id = $roleUser->id;
-                $roleUserPermission->permission_id = $permission->id;
-                $roleUserPermission->save();
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                $permission = Permission::where('title', $action . '-' . $resource)->first();
+                $permissionIds[] = $permission->id;
             }
         }
+
+        $role = new Role;
+        $role->title = 'User';
+        $role->description = 'Ordinary user.';
+        $role->save();
+        $role->permissions()->attach($permissionIds);
+        $role->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | User Demo
+        |--------------------------------------------------------------------------
+        */
+
+        $resources = [
+            'item',
+        ];
+
+        $actions = [
+            'view',
+        ];
+
+        $permissionIds = [];
+
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                $permission = Permission::where('title', $action . '-' . $resource)->first();
+                $permissionIds[] = $permission->id;
+            }
+        }
+
+        $role = new Role;
+        $role->title = 'User Demo';
+        $role->description = 'Demo for ordinary user.';
+        $role->save();
+        $role->permissions()->attach($permissionIds);
+        $role->save();
     }
 }

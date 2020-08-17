@@ -27,5 +27,9 @@ class PermissionSeeder extends Seeder
                 $permission->save();
             }
         }
+
+        $permission = new Permission;
+        $permission->title = 'access-user-management';
+        $permission->save();
     }
 }

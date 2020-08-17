@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use App\Role;
 use App\Permission;
 use App\Http\Requests\StoreRole;
@@ -17,6 +19,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view-role', Auth::user());
+
         $roles = Role::all();
 
         return view('roles', compact('roles'));
@@ -29,6 +33,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create-role', Auth::user());
+
         $permissions = Permission::all();
 
         return view('roles.create', compact('permissions'));
@@ -42,6 +48,8 @@ class RoleController extends Controller
      */
     public function store(StoreRole $request)
     {
+        Gate::authorize('create-role', Auth::user());
+
         $validated = $request->validated();
 
         $role = new Role;
@@ -64,6 +72,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        Gate::authorize('view-role', Auth::user());
+
         $role = Role::findOrFail($id);
 
         return view('roles.show', compact('role'));
@@ -77,6 +87,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('edit-role', Auth::user());
+
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
@@ -92,6 +104,8 @@ class RoleController extends Controller
      */
     public function update(UpdateRole $request, $id)
     {
+        Gate::authorize('edit-role', Auth::user());
+
         $validated = $request->validated();
 
         $role = Role::findOrFail($id);
@@ -113,6 +127,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('delete-role', Auth::user());
+
         $role = Role::findOrFail($id);
         $role->delete();
 

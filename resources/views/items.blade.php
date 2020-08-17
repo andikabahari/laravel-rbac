@@ -14,9 +14,11 @@
                         </div>
                     @endif
 
-                    <a class="btn btn-success mb-3" href="{{ route('create-item') }}">
-                        {{ __('Add Item') }}
-                    </a>
+                    @can('create-item', Auth::user())
+                        <a class="btn btn-success mb-3" href="{{ route('create-item') }}">
+                            {{ __('Add Item') }}
+                        </a>
+                    @endcan
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -38,19 +40,25 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>
-                                            <a class="btn btn-info btn-sm" href="{{ route('show-item', $item->id) }}">
-                                                {{ __('View') }}
-                                            </a>
-                                            <a class="btn btn-primary btn-sm" href="{{ route('edit-item', $item->id) }}">
-                                                {{ __('Edit') }}
-                                            </a>
-                                            <form class="d-inline-block" action="{{ route('destroy-item', $item->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">
-                                                    {{ __('Delete') }}
-                                                </button>
-                                            </form>
+                                            @can('view-item', Auth::user())
+                                                <a class="btn btn-info btn-sm" href="{{ route('show-item', $item->id) }}">
+                                                    {{ __('View') }}
+                                                </a>
+                                            @endcan
+                                            @can('edit-item', Auth::user())
+                                                <a class="btn btn-primary btn-sm" href="{{ route('edit-item', $item->id) }}">
+                                                    {{ __('Edit') }}
+                                                </a>
+                                            @endcan
+                                            @can('delete-item', Auth::user())
+                                                <form class="d-inline-block" action="{{ route('destroy-item', $item->id) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm" type="submit">
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
